@@ -72,8 +72,10 @@ flowchart TD
 ## Keywords
 
 intrusion detection, IDS, false positive reduction, alert correlation,
-SOC, SIEM, SOAR, threat hunting, CICIDS2017, agent security, OWASP
-agentic threats, audit trail, reproducible research, Python.
+SOC, SIEM, SOAR, threat hunting, CICIDS2017, AI security, AI attacks,
+AI defence, AI networks, agentic AI security, LLM security, prompt
+injection defense, agent oversight, OWASP agentic threats, audit trail,
+reproducible research, Python, machine learning security.
 
 ⭐️ If this helped your SOC or your research, star the repo — it keeps
 falsifiable security work visible.
