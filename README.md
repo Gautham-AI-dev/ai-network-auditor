@@ -32,6 +32,43 @@ python reproduce.py          # exit 0 = ALL MATCH (PASS)
 - Bit-identical repeat runs (chain fingerprints match exactly).
 - Novelty, targets, and failures: `docs/novelty-lock.md` (frozen).
 
+## Where it sits in your network
+
+```mermaid
+flowchart LR
+    NET[Internet / WAN] --> FW[Firewall]
+    FW --> CORE[Core switch<br/>span / mirror port]
+    CORE --> SEN[Sentinel sensor<br/>passive tap, no inline risk]
+    SEN --> DET[Detector swarm<br/>rules + anomaly x2 + supervised]
+    DET --> VER[Deterministic verdict<br/>no AI in the verdict path]
+    VER --> CHAIN[(Signed audit chain<br/>replay-verifiable)]
+    VER --> SIEM[SIEM / SOAR<br/>only verdicts, not noise]
+    SIEM --> SOC[SOC analyst<br/>fewer, provable alarms]
+    RED[Red-team loop] -. attacks .-> DET
+    DRIFT[Drift monitor] -. watches .-> DET
+```
+
+The sensor is passive (a copy of traffic, never inline), so deploying it
+cannot break the network. Analysts stop drowning because only adjudicated
+verdicts — each with linked evidence — reach the SIEM, instead of every
+detector shouting separately.
+
+## How a verdict is made
+
+```mermaid
+flowchart TD
+    F[Network flows<br/>586k locked subset] --> D1[Rules agent]
+    F --> D2[Anomaly agent]
+    F --> D3[PCA agent]
+    F --> D4[Supervised agent]
+    D1 & D2 & D3 & D4 --> V[Verdict function<br/>fixed logic, train-locked]
+    V --> C{Meets bar?}
+    C -->|yes| OK[Verdict + evidence links]
+    C -->|no| RB[Auto-rollback<br/>to last stable config]
+    OK --> H[Hash chain append]
+    H --> AUD[Auditor replays<br/>any verdict offline]
+```
+
 ## Keywords
 
 intrusion detection, IDS, false positive reduction, alert correlation,
