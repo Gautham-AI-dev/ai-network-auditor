@@ -9,7 +9,7 @@
   },
   "A3_flood": {
     "pass": true,
-    "detail": "consistent=True prec_drop=0.0000 time=0.2s"
+    "detail": "consistent=True prec_drop=0.0000 time=0.1s"
   },
   "A4_determinism": {
     "pass": true,

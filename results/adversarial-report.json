@@ -1,0 +1,33 @@
+{
+  "seed": 21,
+  "n_sample": 20000,
+  "clean": {
+    "supervised": 0.9976,
+    "anomaly": 0.0365,
+    "signature": 0.4949
+  },
+  "noise": {
+    "supervised": 0.9888,
+    "anomaly": 0.092,
+    "signature": 0.4949
+  },
+  "mimicry": {
+    "supervised": 0.256,
+    "anomaly": 0.0014,
+    "signature": 1.0
+  },
+  "drops": {
+    "supervised": {
+      "noise_drop": 0.0088,
+      "mimicry_drop": 0.7416
+    },
+    "anomaly": {
+      "noise_drop": -0.0555,
+      "mimicry_drop": 0.0351
+    },
+    "signature": {
+      "noise_drop": 0.0,
+      "mimicry_drop": -0.5051
+    }
+  }
+}

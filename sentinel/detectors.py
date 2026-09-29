@@ -20,6 +20,14 @@ from sklearn.preprocessing import StandardScaler
 BASE = os.path.dirname(os.path.abspath(__file__))
 SEED = 11
 
+
+def thresholds():
+    """Tunable knobs live in thresholds.json (versioned, rollback-able).
+    No silent defaults: a missing file is a hard error."""
+    import json as _json
+    with open(os.path.join(BASE, "thresholds.json"), encoding="utf-8") as f:
+        return _json.load(f)
+
 FEATS = ["Flow Packets/s", "SYN Flag Count", "Flow Duration",
          "Total Fwd Packets"]
 
@@ -36,9 +44,10 @@ def d1_signature(Xtr, ytr, Xte):
     """Hand rules on real features, thresholds tuned on train for precision:
     scan-like = SYN-heavy short flows; flood-like = extreme packet rate."""
     rate, syn, dur = Xtr[:, 0], Xtr[:, 1], Xtr[:, 2]
-    t_rate = float(np.quantile(rate[ytr == 1], 0.50))
-    t_syn = float(np.quantile(syn[ytr == 1], 0.50))
-    t_dur = float(np.quantile(dur[ytr == 1], 0.50))
+    q = thresholds()["d1_quantiles"]
+    t_rate = float(np.quantile(rate[ytr == 1], q[0]))
+    t_syn = float(np.quantile(syn[ytr == 1], q[1]))
+    t_dur = float(np.quantile(dur[ytr == 1], q[2]))
     scan = (Xte[:, 1] >= max(t_syn, 1)) & (Xte[:, 2] <= t_dur)
     flood = Xte[:, 0] >= t_rate
     pred = (scan | flood).astype(int)
@@ -53,7 +62,7 @@ def d2_anomaly(Xtr, ytr, Xte, Xftr=None, Xfte=None):
     Ztr = sc.transform(use_tr[ytr == 0])
     mu = Ztr.mean(axis=0)
     d_tr = ((Ztr - mu) ** 2).sum(axis=1)
-    thr = float(np.quantile(d_tr, 0.95))
+    thr = float(np.quantile(d_tr, thresholds()["d2_quantile"]))
     d_te = ((sc.transform(use_te) - mu) ** 2).sum(axis=1)
     pred = (d_te > thr).astype(int)
     return pred, {"method": "full-feature benign-centroid L2, 95th-pct"}, d_te
@@ -65,10 +74,11 @@ def d4_pca(Xtr, ytr, Xte, Xftr=None, Xfte=None):
     use_te = Xfte if Xfte is not None else Xte
     sc = StandardScaler().fit(use_tr[ytr == 0])
     Ztr = sc.transform(use_tr[ytr == 0])
-    pca = PCA(n_components=20, random_state=SEED)
+    cfg = thresholds()
+    pca = PCA(n_components=cfg["d4_n_components"], random_state=SEED)
     Zp = pca.fit_transform(Ztr)
     err_tr = ((Ztr - pca.inverse_transform(Zp)) ** 2).sum(axis=1)
-    thr = float(np.quantile(err_tr, 0.95))
+    thr = float(np.quantile(err_tr, cfg["d4_quantile"]))
     Zte = sc.transform(use_te)
     err_te = ((Zte - pca.inverse_transform(pca.transform(Zte))) ** 2).sum(
         axis=1)
