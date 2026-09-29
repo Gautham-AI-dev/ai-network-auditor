@@ -1,0 +1,23 @@
+{
+  "seed": 7,
+  "composition": {
+    "ddos": 128025,
+    "portscan": 158804,
+    "benign": 299752
+  },
+  "rows": 586581,
+  "features": 68,
+  "dropped_zero_variance": [
+    "Bwd PSH Flags",
+    "Fwd URG Flags",
+    "Bwd URG Flags",
+    "CWE Flag Count",
+    "Fwd Avg Bytes/Bulk",
+    "Fwd Avg Packets/Bulk",
+    "Fwd Avg Bulk Rate",
+    "Bwd Avg Bytes/Bulk",
+    "Bwd Avg Packets/Bulk",
+    "Bwd Avg Bulk Rate"
+  ],
+  "sha256": "f93a2b3c5f70edc454f4b694a4731618075dfaec76f1d5c292cdadcfc8148f67"
+}

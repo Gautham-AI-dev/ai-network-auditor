@@ -1,0 +1,12 @@
+{
+  "rule": "Rveto(train-locked [(0, 0, 1), (1, 0, 1)])",
+  "metrics": {
+    "recall": 0.9959,
+    "fp": 1569,
+    "fp_rate": 0.01745
+  },
+  "pass": false,
+  "chain_head": "70b38bd25e7cf11170a1f41bb5a27b5f1d9cef3ff108d4e52977b8ad25aebfb1",
+  "chain_entries": 175975,
+  "chain_ok": true
+}

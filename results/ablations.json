@@ -1,0 +1,18 @@
+{
+  "A1_guardrail_fp": {
+    "pass": true,
+    "detail": "verdict 0.01745 vs sup 0.01759"
+  },
+  "A2_drop_supervised": {
+    "pass": true,
+    "detail": "weak-majority rec=0.2837 fp=0.03188 chain=True/175975"
+  },
+  "A3_flood": {
+    "pass": true,
+    "detail": "consistent=True prec_drop=0.0000 time=0.2s"
+  },
+  "A4_determinism": {
+    "pass": true,
+    "detail": "head_match=True 70b38bd25e7cf111"
+  }
+}

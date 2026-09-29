@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+sentinel/data/
+sentinel/*.parquet
+sentinel/*.npz
+sentinel/*-chain.jsonl
+sentinel/*chain*.jsonl

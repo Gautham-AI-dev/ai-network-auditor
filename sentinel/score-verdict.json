@@ -1,0 +1,16 @@
+{
+  "method": "stacking (textbook, train-fit)",
+  "threshold": 0.38,
+  "metrics": {
+    "recall": 0.9973,
+    "fp": 1245,
+    "fp_rate": 0.01384
+  },
+  "best_lone": {
+    "recall": 0.9974,
+    "fp": 1582,
+    "fp_rate": 0.01759
+  },
+  "pass": false,
+  "chain_head": "7170a600259eeabde3739a70bb2eef8dddf5c901c89472e65856b6b76dae92b7"
+}

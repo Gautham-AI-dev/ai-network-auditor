@@ -1,0 +1,54 @@
+{
+  "seed": 11,
+  "n_train": 410606,
+  "n_test": 175975,
+  "features": [
+    "Flow Packets/s",
+    "SYN Flag Count",
+    "Flow Duration",
+    "Total Fwd Packets"
+  ],
+  "detectors": {
+    "anomaly": {
+      "precision": 0.8411,
+      "recall": 0.2841,
+      "fp": 4619,
+      "fp_rate": 0.05136,
+      "info": {
+        "method": "full-feature benign-centroid L2, 95th-pct"
+      }
+    },
+    "pca": {
+      "precision": 0.8434,
+      "recall": 0.284,
+      "fp": 4538,
+      "fp_rate": 0.05046,
+      "info": {
+        "method": "PCA20 benign-only recon-error, 95th-pct"
+      }
+    },
+    "signature": {
+      "precision": 0.7183,
+      "recall": 0.506,
+      "fp": 17072,
+      "fp_rate": 0.18984,
+      "info": {
+        "rule": "syn>=p50 & dur<=p50 | rate>=p50 (attack-train)",
+        "thresholds": [
+          25974.02597,
+          0.0,
+          77.0
+        ]
+      }
+    },
+    "supervised": {
+      "precision": 0.9819,
+      "recall": 0.9974,
+      "fp": 1582,
+      "fp_rate": 0.01759,
+      "info": {
+        "model": "logreg"
+      }
+    }
+  }
+}
